@@ -1,1 +1,4 @@
 practise/
+*.o
+DU1/primes
+DU1/steg-decode
