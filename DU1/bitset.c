@@ -1,11 +1,11 @@
-#include "bitset.h"
-
 #ifdef USE_INLINE
+
+#include "bitset.h"
 
 extern inline unsigned long bitset_size(bitset_t jmeno_pole);
 extern inline void bitset_setbit(bitset_t jmeno_pole, unsigned long index,
-                                 int vyraz);
+								 int vyraz);
 extern inline unsigned long bitset_getbit(bitset_t jmeno_pole,
-                                          unsigned long index);
+										  unsigned long index);
 
 #endif
