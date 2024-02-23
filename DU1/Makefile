@@ -1,10 +1,13 @@
 COMPILER=gcc
-FLAGS= -g -O2 -std=c11 -Wall -pedantic -Wextra
+FLAGS= -g -O2 -fsanitize=address -std=c11 -Wall -pedantic -Wextra
 
-all: primes primes-i steg-decode
+all: primes primes-i
 
 run: all
-	ulimit -s 35000; ./primes; ./primes-i; ./steg-decode du1-obrazek.ppm
+	ulimit -s 35000; ./primes; ./primes-i;
+
+pepa: primes
+	ulimit -s 35000; ./primes;
 
 # Macros
 primes: primes.o error.o eratosthenes.o
@@ -29,14 +32,11 @@ bitset-i.o: bitset.c bitset.h
 eratosthenes-i.o: eratosthenes.c eratosthenes.h bitset.h
 	$(COMPILER) $(FLAGS) -DUSE_INLINE -c eratosthenes.c -o eratosthenes-i.o
 
-
 error.o: error.c error.h 
 	$(COMPILER) $(FLAGS) -c error.c -o error.o
 
-steg-decode: steg-decode.c eratosthenes.c ppm.c error.h
-	$(COMPILER) $(FLAGS) ppm.c error.c steg-decode.c eratosthenes.c -o steg-decode -lm
 
 clean: clear
 
 clear:
-	rm *.o primes primes-i steg-decode
+	rm *.o primes primes-i
