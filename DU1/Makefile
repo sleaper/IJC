@@ -1,13 +1,13 @@
 COMPILER=gcc
-FLAGS= -g -O2 -fsanitize=address -std=c11 -Wall -pedantic -Wextra
+FLAGS= -g -O2 -std=c11 -Wall -pedantic -Wextra
 
 all: primes primes-i
 
 run: all
-	ulimit -s 35000; ./primes; ./primes-i;
+	ulimit -s 85000; ./primes; ./primes-i;
 
 pepa: primes
-	ulimit -s 35000; ./primes;
+	ulimit -s 85000; ./primes;
 
 # Macros
 primes: primes.o error.o eratosthenes.o

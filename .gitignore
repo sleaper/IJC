@@ -2,6 +2,7 @@ practise/
 *.o
 *.ppm
 DU1/primes
+DU1/primes-i
 DU1/steg-decode
 old-du1/
 
