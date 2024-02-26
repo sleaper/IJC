@@ -1,13 +1,10 @@
 COMPILER=gcc
 FLAGS= -g -O2 -std=c11 -Wall -pedantic -Wextra
 
-all: primes primes-i
+all: primes primes-i no-comment
 
 run: all
 	ulimit -s 85000; ./primes; ./primes-i;
-
-pepa: primes
-	ulimit -s 85000; ./primes;
 
 # Macros
 primes: primes.o error.o eratosthenes.o
@@ -35,8 +32,15 @@ eratosthenes-i.o: eratosthenes.c eratosthenes.h bitset.h
 error.o: error.c error.h 
 	$(COMPILER) $(FLAGS) -c error.c -o error.o
 
+# TASK 2
+no-comment: no-comment.o error.o
+	$(COMPILER) $(FLAGS) no-comment.o error.o -o no-comment
+
+no-comment.o: no-comment.c error.h
+	$(COMPILER) $(FLAGS) -c no-comment.c -o no-comment.o
+
 
 clean: clear
 
 clear:
-	rm *.o primes primes-i
+	rm *.o primes primes-i no-comment
