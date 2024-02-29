@@ -1,17 +1,21 @@
-#include <stdio.h>
-
 #define KOTESENI /* Block comment in the middle of macro definition */ 42
 
-int main(){
+int main() {
     /*
             Multi
                     Line
         Block
                 Comment
-    
+
     */
 
     char *comment = "/* This is not a block comment */";
+    /\
+/ enter hneď za \\
+
+    /\           
+/ veľa whitespace za \\
+
     char *string = "// This is not a line comment";
 
     /* Random block comment */
