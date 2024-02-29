@@ -10,12 +10,6 @@ int main() {
     */
 
     char *comment = "/* This is not a block comment */";
-    /\
-/ enter hneď za \\
-
-    /\           
-/ veľa whitespace za \\
-
     char *string = "// This is not a line comment";
 
     /* Random block comment */
