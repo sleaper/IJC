@@ -1,6 +1,3 @@
-#ifndef ERROR_H
-#define ERROR_H
-
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,5 +27,3 @@ void error_exit(const char *fmt, ...) {
 
     exit(1);
 }
-
-#endif

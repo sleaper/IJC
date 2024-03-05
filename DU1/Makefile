@@ -10,23 +10,23 @@ run: all
 primes: primes.o error.o eratosthenes.o
 	$(COMPILER) $(FLAGS) primes.o error.o eratosthenes.o -o primes -lm
 
-primes.o: primes.c bitset.h eratosthenes.h
+primes.o: primes.c bitset.h error.h eratosthenes.h
 	$(COMPILER) $(FLAGS) -c primes.c -o primes.o
 
-eratosthenes.o: eratosthenes.c eratosthenes.h bitset.h
+eratosthenes.o: eratosthenes.c bitset.h error.h
 	$(COMPILER) $(FLAGS) -c eratosthenes.c -o eratosthenes.o
 
 # Inline functions
 primes-i: primes-i.o bitset-i.o error.o eratosthenes-i.o
 	$(COMPILER) $(FLAGS) primes-i.o bitset-i.o error.o eratosthenes-i.o -o primes-i -lm
 
-primes-i.o: primes.c bitset.h eratosthenes.h
+primes-i.o: primes.c bitset.h error.h eratosthenes.h
 	$(COMPILER) $(FLAGS) -DUSE_INLINE -c primes.c -o primes-i.o
 
-bitset-i.o: bitset.c bitset.h 
+bitset-i.o: bitset.c bitset.h error.h
 	$(COMPILER) $(FLAGS) -DUSE_INLINE -c bitset.c -o bitset-i.o
 
-eratosthenes-i.o: eratosthenes.c eratosthenes.h bitset.h
+eratosthenes-i.o: eratosthenes.c bitset.h error.h
 	$(COMPILER) $(FLAGS) -DUSE_INLINE -c eratosthenes.c -o eratosthenes-i.o
 
 error.o: error.c error.h 
