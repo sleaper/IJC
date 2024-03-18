@@ -1,3 +1,7 @@
+// no-comment.c
+// Řešení IJC-DU1, příklad b), 18.3.2024
+// Autor: Petr Špác, FIT
+// Přeloženo: gcc 11.4.0
 // fileno declaration
 #define _POSIX_C_SOURCE 200112L
 
@@ -24,17 +28,19 @@ int main(int argc, char *argv[]) {
         inDesc = fileno(inputFile);
         outDesc = fileno(outFile);
 
-        if (fstat(inDesc, &fStat) < 0)
-            // TODO: Close file, maybe add goto
-            return 1;
+        if (fstat(inDesc, &fStat) < 0) {
+            fclose(inputFile);
+            error_exit("no-comment: Chyba ziskani stavu souboru!\n");
+        }
 
-        if (fstat(outDesc, &oStat) < 0)
-            return 1;
+        if (fstat(outDesc, &oStat) < 0) {
+            fclose(inputFile);
+            error_exit("no-comment: Chyba ziskani stavu souboru!\n");
+        }
 
         if (oStat.st_ino == fStat.st_ino) {
-            fclose(stdout);
+            fclose(inputFile);
             error_exit("no-comment: Stdout presmerovan na vstupni soubor!\n");
-            return 1;
         }
 
     } else {
@@ -129,8 +135,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (stav != 0)
-        fprintf(stderr, "Error\n");
+    if (stav != 0) {
+        fclose(inputFile);
+        error_exit("no-comment: Nevhody konecny stav!\n");
+    }
 
     if (inputFile) {
         fclose(inputFile);

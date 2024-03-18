@@ -1,3 +1,6 @@
+# Makefile
+# Řešení IJC-DU1, 18.3.2024
+# Autor: Petr Špác, FIT
 COMPILER=gcc
 FLAGS= -g -O2 -std=c11 -Wall -pedantic -Wextra
 
@@ -38,7 +41,6 @@ no-comment: no-comment.o error.o
 
 no-comment.o: no-comment.c error.h
 	$(COMPILER) $(FLAGS) -c no-comment.c -o no-comment.o
-
 
 clean: clear
 

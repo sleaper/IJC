@@ -1,3 +1,7 @@
+// eratosthenes.c
+// Řešení IJC-DU1, příklad a), 18.3.2024
+// Autor: Petr Špác, FIT
+// Přeloženo: gcc 11.4.0
 #include "bitset.h"
 #include <math.h>
 

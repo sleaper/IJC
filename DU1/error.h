@@ -1,3 +1,7 @@
+// error.h
+// Řešení IJC-DU1, příklad b), 18.3.2024
+// Autor: Petr Špác, FIT
+// Přeloženo: gcc 11.4.0
 #ifndef ERROR_H
 #define ERROR_H
 
