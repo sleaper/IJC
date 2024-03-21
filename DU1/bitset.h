@@ -11,7 +11,7 @@
 #include "limits.h"
 #include "string.h"
 
-typedef unsigned long *bitset_t;
+typedef unsigned long bitset_t[];
 typedef unsigned long bitset_index_t;
 
 // Define the size of an unsigned long in bits.
