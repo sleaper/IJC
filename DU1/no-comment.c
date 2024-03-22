@@ -6,6 +6,7 @@
 #define _POSIX_C_SOURCE 200112L
 
 #include "error.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <sys/stat.h>
 
@@ -101,6 +102,8 @@ int main(int argc, char *argv[]) {
                 stav = 6;
             } else if (c == '/') {
                 stav = 8;
+            } else if (c == '\\') {
+                stav = 10;
             } else {
                 stav = 0;
                 putchar('/');
@@ -130,6 +133,21 @@ int main(int argc, char *argv[]) {
         case 9:
             if (c != '\\') {
                 stav = 8;
+            }
+            break;
+        case 10:
+            if (isspace(c) != 0) {
+                stav = 10;
+            } else {
+                stav = 11;
+            }
+            break;
+        case 11:
+            if (c == '\n') {
+                stav = 0;
+                putchar('\n');
+            } else if (c == '\\') {
+                stav = 10;
             }
             break;
         }

@@ -36,5 +36,21 @@ int main() {
     char *string2 = "/***/";
     char *string3 = "text\"//text\'\"\\";
 
+    /*//*/ int ret = 0;
+    int test2 = 10;
+
+    /\
+/aa
+
+    /\
+* aa*\
+/
+    //\
+i();
+    /\          
+/\
+ahojky
+
+    int test = 10;
     return 0;
 }
