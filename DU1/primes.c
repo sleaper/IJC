@@ -10,14 +10,6 @@
 #define N 666000000
 #define LAST_TEN 10
 
-void print_bits(unsigned long num) {
-    for (unsigned long bit = 0; bit < (sizeof(unsigned long) * 8); bit++) {
-        printf("%lu ", num & 0x01);
-        num = num >> 1;
-    }
-    printf("\n");
-}
-
 int main(void) {
 
     clock_t start = clock();
@@ -34,6 +26,7 @@ int main(void) {
         }
     }
 
+    // Print last ten prime numbers
     for (int i = LAST_TEN - 1; i >= 0; i--) {
         printf("%lu\n", nums[i]);
     }

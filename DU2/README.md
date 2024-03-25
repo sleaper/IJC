@@ -1,13 +1,13 @@
 IJC: DU2
 
 
-Jazyk C                       DU2                      21.3.2023
+Jazyk C                       DU2                      26.3.2024
 ----------------------------------------------------------------
 
                          Domácí úkol č.2
 
 
-Termín odevzdání: 18.4.2023                       (Max. 15 bodů)
+Termín odevzdání: 24.4.2024                       (Max. 15 bodů)
 
 1) (max 5b)
    a) V jazyku C napište program "tail.c", který  ze zadaného
@@ -22,14 +22,14 @@ Termín odevzdání: 18.4.2023                       (Max. 15 bodů)
 
    [Poznámka: výsledky by měly být +-stejné jako u POSIX tail]
 
-   Implementujte funkce cb_create(n), cb_put(cb,line), cb_get(cb), cb_free(cb)
+   Implementujte funkce:
+      cbuf_create(n), cbuf_put(cb,line), cbuf_get(cb), cbuf_free(cb)
    tvořící API pro specializovaný kruhový buffer dynamicky alokovaných řádků
    (https://en.wikipedia.org/wiki/Circular_buffer). Pozor na test
    prázdnosti/plnosti (shoda indexů znamená prázdný buffer).
 
    Program tail není modulární.
-   WARNING:
-   Použijte implementační limit na délku řádku (např. 4095 znaků),
+   Použijte implementační limit na délku řádku (např. 2047 znaků),
    v případě prvního překročení mezí hlaste chybu na stderr (řádně otestujte)
    a pokračujte se zkrácenými řádky (zbytek řádku přeskočit/ignorovat).
 
@@ -75,7 +75,7 @@ Termín odevzdání: 18.4.2023                       (Max. 15 bodů)
    zvláštním modulu -- to například umožní případnou výměnu htab_hash_function() ve vašem
    staticky sestaveném programu. (V dynamicky sestaveném programu je to možné vždy.)
    Vyzkoušejte si to: definujte svoji verzi htab_hash_function() v programu
-   s podmíněným překladem -- použijte #ifdef HASHTEST.
+   s podmíněným překladem -- použijte #ifdef MY_HASH_FUN_TEST.
 
    Knihovna s tabulkou se musí jmenovat
    "libhtab.a" (na Windows je možné i "htab.lib") pro statickou variantu,
@@ -107,13 +107,8 @@ Termín odevzdání: 18.4.2023                       (Max. 15 bodů)
       +----------+
       | size     | // aktuální počet záznamů [(key,data),next]
       +----------+
-      | arr_size | // velikost pole ukazatelů (počet položek)
-      +----------+
-      | arr_ptr  | // ukazatel na dynamicky alokované pole ukazatelů
-      +----------+
-        |
-        V
-      +---+
+      | arr_size | // počet položek následujícího pole ukazatelů
+      +---+------+
       |ptr|-->[(key,data),next]-->[(key,data),next]-->[(key,data),next]--|
       +---+
       |ptr|--|
@@ -123,11 +118,12 @@ Termín odevzdání: 18.4.2023                       (Max. 15 bodů)
       |ptr|--|
       +---+
 
+      Položka .arr_size je velikost následujícího pole ukazatelů (použijte
+      C99: "flexible array member"). Paměť pro strukturu se dynamicky alokuje
+      tak velká, aby se do ní vešly i všechny položky pole.
+      V programu zvolte vhodnou velikost pole a v komentáři zdůvodněte vaše
+      rozhodnutí.
       (V obrázku platí velikost .arr_size==4 a počet položek .size==5.)
-      Položka .arr_size je velikost dynamicky alokovaného pole ukazatelů.
-      Paměť pro strukturu se dynamicky alokuje a ukazatel na ni se používá
-      pro identifikaci tabulky.  V programu zvolte vhodnou velikost pole
-      a v komentáři zdůvodněte vaše rozhodnutí.
       Rozhraní knihovny obsahuje jen _neúplnou_deklaraci_ struktury, definice
       je uživateli knihovny skryta (jde o formu zapouzdření - "encapsulation").
 
@@ -296,7 +292,7 @@ Poznámky:
 
 ----------------------------------------------------------------
 
-Obecné pokyny pro vypracování domácích úkolů (rev 21.3.2023)
+Obecné pokyny pro vypracování domácích úkolů (rev 25.3.2024)
 
 *  Pro úkoly v jazyce C používejte ISO C11 (soubory *.c)
    Pro úkoly v jazyce C++ používejte ISO C++17 (soubory *.cc)
@@ -336,6 +332,5 @@ Obecné pokyny pro vypracování domácích úkolů (rev 21.3.2023)
   a to bez výjimky (+bonus v podobě návštěvy u disciplinární komise).
 
 
-Poslední modifikace: 21. March 2023
+Poslední modifikace: 25. March 2024
 Pokud naleznete na této stránce chybu, oznamte to dopisem na adresu peringer AT fit.vutbr.cz
-

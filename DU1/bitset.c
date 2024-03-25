@@ -2,6 +2,7 @@
 // Řešení IJC-DU1, příklad a), 18.3.2024
 // Autor: Petr Špác, FIT
 // Přeloženo: gcc 11.4.0
+// Deklarace potrebna pro inline funkce
 #ifdef USE_INLINE
 
 #include "bitset.h"

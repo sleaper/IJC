@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
     struct stat fStat;
     struct stat oStat;
 
+    // Input file check
     if (argc == 2) {
         inputFile = fopen(argv[1], "r");
         if (!inputFile) {

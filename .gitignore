@@ -1,5 +1,8 @@
 practise/
 *.o
+*.zip
+tail
+no-comment
 *.ppm
 DU1/primes
 DU1/primes-i
