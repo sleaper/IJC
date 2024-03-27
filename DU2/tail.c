@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// FIX: CHANGE
 #define LINE_CHAR_LIMIT 2049 // + \n + \0
 
 typedef struct {

@@ -6,7 +6,7 @@ tail: tail.c
 	$(COMPILER) $(FLAGS) tail.c -o tail
 
 wordcount-: wordcount-.cc
-	g++ -std=c++17 -pedantic -Wall wordcount-.cc
+	g++ -std=c++17 -O2 -pedantic -Wall wordcount-.cc
 
 clear:
 	rm *.o wordcount- wordcount tail
