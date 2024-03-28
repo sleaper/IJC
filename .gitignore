@@ -8,4 +8,5 @@ DU1/primes
 DU1/primes-i
 DU1/steg-decode
 old-du1/
-
+__pycache__
+tail.dSYM

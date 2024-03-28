@@ -2,6 +2,7 @@
 // Řešení IJC-DU2, příklad a), 18.3.2024
 // Autor: Petr Špác, FIT
 // Přeloženo: gcc 11.4.0
+#include <_ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,6 +24,22 @@ void cbuf_free(cb_t *cb);
 int print_lines(cb_t *cb);
 int load_lines(char *filename, cb_t *cb);
 
+int is_number(char *s) {
+    int is_digit = true;
+    for (int i = 0, n = strlen(s); i < n; i++) {
+        if (!isdigit(s[i])) {
+            is_digit = false;
+            break;
+        }
+    }
+
+    if (is_digit) {
+        return atoi(s);
+    } else {
+        return -1;
+    }
+}
+
 int main(int argc, char **argv) {
 
     int line_count = 10;
@@ -32,16 +49,18 @@ int main(int argc, char **argv) {
         if (!strcmp(argv[i], "-n")) {
             i++; // Next arg
             if (i < argc) {
-                line_count = atoi(argv[i]);
+                line_count = is_number(argv[i]);
             }
         } else {
             filename = argv[i];
         }
     }
 
-    if (line_count < 1) {
-        printf("%s: nespravny pocet radku", __func__);
+    if (line_count == -1) {
+        fprintf(stderr, "%s: nevhodny pocet radku", __func__);
         return 1;
+    } else if (line_count == 0) {
+        return 0;
     }
 
     cb_t *cb = cbuf_create(line_count);
@@ -87,12 +106,17 @@ int load_lines(char *filename, cb_t *cb) {
                 fprintf(stderr, "%s: Prekroceni max delky radku!\n", __func__);
                 max_error = 1;
             }
+
+            if (line[LINE_CHAR_LIMIT - 2] != '\n') {
+                skip(file);
+            }
+
             line[LINE_CHAR_LIMIT - 2] = '\n';
             line[LINE_CHAR_LIMIT - 1] = '\0';
-            skip(file);
         }
 
         cbuf_put(cb, line);
+        memset(line, 0, LINE_CHAR_LIMIT);
     }
 
     if (file != stdin) {
