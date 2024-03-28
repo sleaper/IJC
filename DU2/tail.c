@@ -2,7 +2,7 @@
 // Řešení IJC-DU2, příklad a), 18.3.2024
 // Autor: Petr Špác, FIT
 // Přeloženo: gcc 11.4.0
-#include <_ctype.h>
+#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,7 +14,7 @@ typedef struct {
     int size;
     int writeIdx;
     int readIdx;
-    char **start;
+    char *start[];
 } cb_t;
 
 cb_t *cbuf_create(int n);
@@ -41,7 +41,6 @@ int is_number(char *s) {
 }
 
 int main(int argc, char **argv) {
-
     int line_count = 10;
     char *filename = NULL;
 
@@ -94,7 +93,7 @@ int load_lines(char *filename, cb_t *cb) {
         file = fopen(filename, "r");
         if (file == NULL) {
             fprintf(stderr, "%s: soubor se nepodarilo otevrit!\n", __func__);
-            return 0;
+            return 1;
         }
     }
 
@@ -103,7 +102,8 @@ int load_lines(char *filename, cb_t *cb) {
     while (fgets(line, sizeof(line), file) != NULL) {
         if (strlen(line) > LINE_CHAR_LIMIT - 2) {
             if (max_error == 0) {
-                fprintf(stderr, "%s: Prekroceni max delky radku!\n", __func__);
+                fprintf(stderr, "%s: Prekroceni max delky radku %lu!\n",
+                        __func__, strlen(line));
                 max_error = 1;
             }
 
@@ -169,7 +169,7 @@ cb_t *cbuf_create(int n) {
 
     // NOTE: skipping initial cb_t struct to beginning of the pointers
     // array and casting to correct type
-    cb->start = (char **)((char *)cb + sizeof(cb_t));
+    // cb->start = (char **)((char *)cb + sizeof(cb_t));
     cb->size = n;
     cb->writeIdx = 0;
     cb->readIdx = 0;
