@@ -1,5 +1,7 @@
 practise/
 *.o
+*.a
+*.so
 *.zip
 tail
 no-comment

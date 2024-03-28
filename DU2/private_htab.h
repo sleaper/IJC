@@ -10,7 +10,7 @@ struct htab_item {
 typedef struct htab {
     size_t size;
     size_t arr_size;
-    struct htab_item *p_arr[];
+    struct htab_item *parr[];
 } htab;
 
 #endif // PRIVATE_HTAB_H__
