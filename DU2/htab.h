@@ -18,8 +18,8 @@ typedef int htab_value_t;       // typ hodnoty
 
 // Dvojice dat v tabulce:
 typedef struct htab_pair {
-    htab_key_t key;     // klíč
-    htab_value_t value; // asociovaná hodnota
+    htab_key_t key;     // klíč (retezec)
+    htab_value_t value; // asociovaná hodnota (pocet vyskytu slova)
 } htab_pair_t;          // typedef podle zadání
 
 // Rozptylovací (hash) funkce (stejná pro všechny tabulky v programu)

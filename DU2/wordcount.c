@@ -1,17 +1,18 @@
 #include "htab.h"
+#include "io.h"
 #include <stdio.h>
+
+#define MAX_WORD 255
 
 int main(void) {
 
     // Create the hash table
-    struct htab *table = htab_init(10);
+    struct htab *table = htab_init(15);
 
-    // Add some word
-    htab_pair_t *item = htab_lookup_add(table, "petr");
+    char word[MAX_WORD];
 
-    printf("key: %s, value: %d", item->key, item->value);
     // While and load words into hash table
     // Print all words from hash table
-
+    htab_free(table);
     return 0;
 }
