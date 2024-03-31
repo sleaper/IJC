@@ -23,7 +23,7 @@ bool htab_erase(htab_t *t, htab_key_t key) {
                 prev->next = current->next;
             }
 
-            printf("DELETING: %s\n", key);
+            DEBUG_PRINT(("DELETING: %s\n", key));
             // Delete the match
             free((char *)current->item.key);
             current->item.key = NULL; // dangling pointer

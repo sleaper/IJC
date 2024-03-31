@@ -23,7 +23,7 @@ struct htab_item *create_item(htab_key_t key) {
 
     new_item->item.key = string;
     // WARNING: Maybe remove? It will be done by user?
-    new_item->item.value++;
+    // new_item->item.value++;
 
     return new_item;
 }
@@ -35,7 +35,7 @@ htab_pair_t *htab_lookup_add(htab_t *t, htab_key_t key) {
     if (current) {
         return current;
     } else {
-        printf("ADDING: %s\n", key);
+        DEBUG_PRINT(("ADDING: %s\n", key));
         int index = (htab_hash_function(key) % t->arr_size);
 
         struct htab_item *new_item = create_item(key);

@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 echo "testing tail..." >&2
 
 assert_tail_error() {
@@ -83,21 +84,21 @@ assert_tail "$long_line" "-n 1"
 # this should pass
 echo "test 9..."
 long_input=""
-for i in {1..4094}; do long_input+="a"; done
+for i in {1..2046}; do long_input+="a"; done
 long_input+=$'\n'
 assert_tail "$long_input" "-n 5"
 
 # this should pass, but throw an error
 echo "test 10..."
 long_input=""
-for i in {1..4095}; do long_input+="a"; done
+for i in {1..2047}; do long_input+="a"; done
 long_input+=$'\n'
 assert_tail "$long_input" "-n 5"
 
 # this should fail
 echo "test 11..."
 long_input=""
-for i in {1..4096}; do long_input+="a"; done
+for i in {1..2048}; do long_input+="a"; done
 long_input+=$'\n'
 assert_tail_noeq "$long_input" "-n 5" 2> /dev/null
 
@@ -112,102 +113,102 @@ $long_input
 $long_input"
 echo "$long_input" | "./tail" > /dev/null
 
-# ###################
-# # hashtable testing
-# ###################
-#
-# echo "testing hashtable..." >&2
-# ./test
-#
-# ###################
-# # wordcount testing
-# ###################
-#
-# assert_wc() {
-#     stdin="$1"
-#
-#     wc_cc="$(echo "$stdin" | "./wordcount-cc" | sort)"
-#     testing_wc="$(echo "$stdin" | "./wordcount" | sort)"
-#     testing_wc_dyn="$(echo "$stdin" | LD_LIBRARY_PATH="." "./wordcount-dynamic" | sort)"
-#
-#     [ "$testing_wc_dyn" = "$testing_wc" ] || echo \
-# "TESTING FAIL: Dynamic version differs: 
-# Expected: $wc_cc
-# Got: $testing_wc" >&2
-#
-#     [ "$wc_cc" = "$testing_wc" ] || echo \
-# "TESTING FAIL: 
-# Expected: $wc_cc
-# Got: $testing_wc" >&2
-# }
-#
-# assert_wc_noeq() {
-#     stdin="$1"
-#
-#     wc_cc="$(echo "$stdin" | "./wordcount-cc" | sort)"
-#     testing_wc="$(echo "$stdin" | "./wordcount" | sort)"
-#     testing_wc_dyn="$(echo "$stdin" | LD_LIBRARY_PATH="." "./wordcount-dynamic" | sort)"
-#
-#     [ "$testing_wc_dyn" = "$testing_wc" ] || echo \
-# "TESTING FAIL: Dynamic version differs: 
-# Expected: $wc_cc
-# Got: $testing_wc" >&2
-#
-#     [ "$wc_cc" != "$testing_wc" ] || echo \
-# "TESTING FAIL: got identical outputs:
-# $testing_wc" >&2
-# }
-#
-# echo "testing wordcount..." >&2
-#
-# assert_wc "aaa bbbb eee eee bbbb bbbb bbbb e"
-#
-# assert_wc "
-#
-# word1 word3  
-# word1
-#    word2
-#  word1    word3
-#           
-#   "
-#
-# assert_wc "apple banana cherry" 
-# assert_wc "hello
-# world" 
-# assert_wc "    leading whitespace  " 
-# assert_wc "multiple multiple" 
-# assert_wc "one two three four five six seven eight nine ten" 
-# assert_wc "" 
-# assert_wc "   " 
-# assert_wc "word with numbers 1234 5678" 
-# assert_wc "word with special characters !@#$%^&*()_+-=[]{};:'\"\\|,./<>?"
-# assert_wc "multiple
-# lines
-# to
-# count" 
-# assert_wc "    multiple
-#   leading
-# whitespace
-# " 
-# assert_wc "tëst wôrds 🖖" 
-# assert_wc "word with tab	character" 
-#
-# long_word="$(printf "%0.sx" {1..255})"
-# assert_wc "$long_word $long_word $long_word $long_word $long_word"
-#
-# long_word="$(printf "%0.sx" {1..256})"
-# assert_wc_noeq "$long_word $long_word $long_word $long_word $long_word" 2> /dev/null
-#
-# many_words="$(printf "%0.sword " {1..100000})"
-# assert_wc "$many_words"
-#
-# # for manual control
-# echo "ATTENTION: you should see just one error below, not five"
-# long_word="$(printf "%0.sx" {1..1000})"
-# long_words="$long_word
-# $long_word
-# $long_word
-# $long_word
-# $long_word"
-#
-# echo "$long_words" | "./wordcount" > /dev/null
+###################
+# hashtable testing
+###################
+
+echo "testing hashtable..." >&2
+./test
+
+###################
+# wordcount testing
+###################
+
+assert_wc() {
+    stdin="$1"
+
+    wc_cc="$(echo "$stdin" | "./wordcount-cc" | sort)"
+    testing_wc="$(echo "$stdin" | "./wordcount" | sort)"
+    testing_wc_dyn="$(echo "$stdin" | LD_LIBRARY_PATH="." "./wordcount-dynamic" | sort)"
+
+    [ "$testing_wc_dyn" = "$testing_wc" ] || echo \
+"TESTING FAIL: Dynamic version differs: 
+Expected: $wc_cc
+Got: $testing_wc" >&2
+
+    [ "$wc_cc" = "$testing_wc" ] || echo \
+"TESTING FAIL: 
+Expected: $wc_cc
+Got: $testing_wc" >&2
+}
+
+assert_wc_noeq() {
+    stdin="$1"
+
+    wc_cc="$(echo "$stdin" | "./wordcount-cc" | sort)"
+    testing_wc="$(echo "$stdin" | "./wordcount" | sort)"
+    testing_wc_dyn="$(echo "$stdin" | LD_LIBRARY_PATH="." "./wordcount-dynamic" | sort)"
+
+    [ "$testing_wc_dyn" = "$testing_wc" ] || echo \
+"TESTING FAIL: Dynamic version differs: 
+Expected: $wc_cc
+Got: $testing_wc" >&2
+
+    [ "$wc_cc" != "$testing_wc" ] || echo \
+"TESTING FAIL: got identical outputs:
+$testing_wc" >&2
+}
+
+echo "testing wordcount..." >&2
+
+assert_wc "aaa bbbb eee eee bbbb bbbb bbbb e"
+
+assert_wc "
+
+word1 word3  
+word1
+   word2
+ word1    word3
+          
+  "
+
+assert_wc "apple banana cherry" 
+assert_wc "hello
+world" 
+assert_wc "    leading whitespace  " 
+assert_wc "multiple multiple" 
+assert_wc "one two three four five six seven eight nine ten" 
+assert_wc "" 
+assert_wc "   " 
+assert_wc "word with numbers 1234 5678" 
+assert_wc "word with special characters !@#$%^&*()_+-=[]{};:'\"\\|,./<>?"
+assert_wc "multiple
+lines
+to
+count" 
+assert_wc "    multiple
+  leading
+whitespace
+" 
+assert_wc "tëst wôrds 🖖" 
+assert_wc "word with tab	character" 
+
+long_word="$(printf "%0.sx" {1..255})"
+assert_wc "$long_word $long_word $long_word $long_word $long_word"
+
+long_word="$(printf "%0.sx" {1..256})"
+assert_wc_noeq "$long_word $long_word $long_word $long_word $long_word" 2> /dev/null
+
+many_words="$(printf "%0.sword " {1..100000})"
+assert_wc "$many_words"
+
+# for manual control
+echo "ATTENTION: you should see just one error below, not five"
+long_word="$(printf "%0.sx" {1..1000})"
+long_words="$long_word
+$long_word
+$long_word
+$long_word
+$long_word"
+
+echo "$long_words" | "./wordcount" > /dev/null

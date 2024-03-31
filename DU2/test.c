@@ -223,16 +223,16 @@ void test_statistics() {
 #endif // STATISTICS
 
 int main() {
-    // test_lookup_add();
-    // test_foreach();
-    // test_bucket_count();
-    // test_erase();
-    // test_find();
-    // test_clear();
-    // test_collision_2();
-    // test_collision_3();
-    // test_collision_many();
-    // test_size();
+    test_lookup_add();
+    test_foreach();
+    test_bucket_count();
+    test_erase();
+    test_find();
+    test_clear();
+    test_collision_2();
+    test_collision_3();
+    test_collision_many();
+    test_size();
 #ifdef STATISTICS
     test_statistics();
 #endif // STATISTICS

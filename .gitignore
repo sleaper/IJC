@@ -12,3 +12,9 @@ DU1/steg-decode
 old-du1/
 __pycache__
 tail.dSYM
+*.txt
+wordcount
+wordcount-cc
+wordcount-dynamic
+DU2/secret
+test

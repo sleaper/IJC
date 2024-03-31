@@ -3,31 +3,36 @@
 #include <stdio.h>
 #include <string.h>
 
+void skip(FILE *file) {
+    int c;
+    while (c = fgetc(file), !isspace(c) && c != EOF)
+        ;
+    return;
+}
+
 int read_word(char *s, int max, FILE *f) {
     if (f == NULL) {
-        fprintf(stderr, "Error: could not work with file pointer!\n");
+        fprintf(stderr, "%s: Neplatny ukazatel na soubor!\n", __func__);
         return -1;
     }
 
     int c, len = 0;
-    bool inword = false;
+    bool isWordStarted = false;
     while ((c = fgetc(f)) != EOF) {
-        if (isspace(c)) {
-            if (inword) {
-                break;
-            }
-        } else if (!inword) {
-            inword = true;
-        }
-
-        if (inword && len < max - 1) {
+        if (!isspace(c) && len < max - 1) {
             s[len++] = (char)c;
+            isWordStarted = true;
+        } else if (isspace(c) && isWordStarted) {
+            break;
+        } else if (len >= max - 1) {
+            skip(f);
+            break;
         }
     }
 
     s[len] = '\0';
 
-    if (c == EOF) {
+    if (len == 0 && c == EOF) {
         return EOF;
     }
 
