@@ -1,7 +1,8 @@
 // tail.c
-// Řešení IJC-DU2, příklad a), 18.3.2024
+// Řešení IJC-DU2, příklad 1), 20.4.2024
 // Autor: Petr Špác, FIT
 // Přeloženo: gcc 11.4.0
+
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -49,6 +50,8 @@ int main(int argc, char **argv) {
             i++; // Next arg
             if (i < argc) {
                 line_count = is_number(argv[i]);
+            } else {
+                line_count = -1;
             }
         } else {
             filename = argv[i];
@@ -93,7 +96,7 @@ int load_lines(char *filename, cb_t *cb) {
         file = fopen(filename, "r");
         if (file == NULL) {
             fprintf(stderr, "%s: soubor se nepodarilo otevrit!\n", __func__);
-            return 1;
+            return 0;
         }
     }
 

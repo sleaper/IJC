@@ -1,3 +1,8 @@
+// wordcount.c
+// Řešení IJC-DU2, příklad 2), 20.4.2024
+// Autor: Petr Špác, FIT
+// Přeloženo: gcc 11.4.0
+
 #include "htab.h"
 #include "io.h"
 #include <stdio.h>
@@ -10,7 +15,9 @@ void print_pair(htab_pair_t *data) {
 }
 
 int main(void) {
-    struct htab *table = htab_init(10000);
+    struct htab *table = htab_init(
+        10000); // Velikost zavisi na vstupnim souboru. Vybral jsem 10000, aby
+                // seq 1000000 2000000|shuf trval na Merlinovi pod 10s
 
     char word[MAX_BUF];
     int error = 0;

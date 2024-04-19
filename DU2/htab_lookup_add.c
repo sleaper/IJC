@@ -1,3 +1,7 @@
+// htab_lookup_add.c
+// Řešení IJC-DU2, příklad 2), 20.4.2024
+// Autor: Petr Špác, FIT
+// Přeloženo: gcc 11.4.0
 // WARNING: TRY on merlin maybe just
 #define _POSIX_C_SOURCE 200809L
 #include "private_htab.h"
@@ -22,8 +26,6 @@ struct htab_item *create_item(htab_key_t key) {
     }
 
     new_item->item.key = string;
-    // WARNING: Maybe remove? It will be done by user?
-    // new_item->item.value++;
 
     return new_item;
 }
@@ -39,6 +41,10 @@ htab_pair_t *htab_lookup_add(htab_t *t, htab_key_t key) {
         int index = (htab_hash_function(key) % t->arr_size);
 
         struct htab_item *new_item = create_item(key);
+        if (new_item == NULL) {
+            fprintf(stderr, "%s, Chyba alokace pameti.", __func__);
+            return NULL;
+        }
 
         new_item->next = t->p_arr[index];
         t->p_arr[index] = new_item;

@@ -1,13 +1,16 @@
+# Makefile
+# Řešení IJC-DU2, příklad 1) + 2), 20.4.2024
+# Autor: Petr Špác, FIT
 CC=gcc
 CXX=g++
 
-CFLAGS=-g -std=c11 -pedantic -Wall -Wextra -O0
+CFLAGS=-g -std=c11 -pedantic -Wall -Wextra
 CXXFLAGS=-std=c++17 -pedantic -Wall
 
 LDFLAGS = -fPIC
-.PHONY=all test zip run
+.PHONY=all zip run clean
 
-all: tail test libhtab.a libhtab.so wordcount wordcount-cc wordcount-dynamic
+all: tail libhtab.a libhtab.so wordcount wordcount-cc wordcount-dynamic
 
 # FIRST TASK
 tail: tail.o
@@ -16,11 +19,10 @@ tail: tail.o
 tail.o: tail.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-
 # SECCOND TASK
 # Wordcount
 wordcount: wordcount.o io.o libhtab.a
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) -o $@ $^ $(CFLAGS)
 
 wordcount-dynamic: wordcount.o io.o libhtab.so
 	$(CC) $(CFLAGS) $^ -o $@ -L. -lhtab -Bdynamic
@@ -29,13 +31,6 @@ wordcount.o: wordcount.c htab.h io.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 io.o: io.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# TEST
-test: test.o libhtab.a
-	$(CC) $(CFLAGS) $^ -o $@ -L. -lhtab
-
-test.o: test.c htab.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Library files
@@ -61,13 +56,14 @@ libhtab.so: $(dyn_obj_files)
 wordcount-cc: wordcount-.cc
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-run: wordcount wordcount-dynamic tail wordcount-cc
-	seq 1000000 2000000|shuf > test.txt
-	./tail < test.txt
-	./wordcount < test.txt
-	./wordcount-dynamic < test.txt
-	./wordcount-cc < test.txt
-	rm test.txt
+
+run: tail wordcount wordcount-cc wordcount-dynamic
+	seq 1000000 2000000|shuf > tmp.txt
+	./tail < tmp.txt
+	./wordcount < tmp.txt
+	LD_LIBRARY_PATH="." ./wordcount-dynamic < tmp.txt
+	./wordcount-cc < tmp.txt
+	rm tmp.txt
 
 clear: clean
 
@@ -75,4 +71,4 @@ clean:
 	rm -f *.o *.so *.a tail wordcount wordcount-dynamic wordcount-cc xspacpe00.zip
 
 zip:
-	zip xnovot2p.zip *.c *.cc *.h makefile
+	zip xspacpe00.zip *.c *.cc *.h Makefile

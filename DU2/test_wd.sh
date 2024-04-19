@@ -13,7 +13,7 @@ fi
 rm a b
 
 # Compare wordcount-dynamic and wordcount-cc outputs
-./wordcount-dynamic < shake.txt | sort > a
+LD_LIBRARY_PATH="." ./wordcount-dynamic < shake.txt | sort > a
 ./wordcount-cc < shake.txt | sort > b
 
 if diff a b > /dev/null; then
@@ -43,7 +43,7 @@ seq 1000000 2000000 | shuf > test.txt
 # Comparing wordcount implementations on a large, shuffled input
 ./wordcount-cc < test.txt | sort > a
 ./wordcount < test.txt | sort > b
-./wordcount-dynamic < test.txt | sort > c
+LD_LIBRARY_PATH="." ./wordcount-dynamic < test.txt | sort > c
 
 if diff a b > /dev/null; then
     echo "wordcount-cc vs wordcount: successful tests"

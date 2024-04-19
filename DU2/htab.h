@@ -1,19 +1,13 @@
+// htab.h
+// Řešení IJC-DU2, příklad 2), 20.4.2024
+// Autor: Petr Špác, FIT
+// Přeloženo: gcc 11.4.0
 // htab.h -- rozhraní knihovny htab (řešení IJC-DU2)
 // Licence: žádná (Public domain)
 
 // následující řádky zabrání násobnému vložení:
 #ifndef HTAB_H__
 #define HTAB_H__
-
-// #define DEBUG
-
-#ifdef DEBUG
-#define DEBUG_PRINT(x) printf x
-#else
-#define DEBUG_PRINT(x)                                                         \
-    do {                                                                       \
-    } while (0)
-#endif
 
 #include <stdbool.h> // bool
 #include <string.h>  // size_t
