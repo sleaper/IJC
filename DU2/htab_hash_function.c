@@ -7,12 +7,12 @@
 
 #ifdef MY_HASH_FUN_TEST
 
-unsigned long hash(unsigned char *str) {
-    unsigned int hash = 0;
+size_t htab_hash_function(const char *str) {
+    unsigned long hash = 5381;
     int c;
 
-    while (c = *str++)
-        hash += c;
+    while ((c = *str++))
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
 
     return hash;
 }
