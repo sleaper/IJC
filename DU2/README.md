@@ -330,7 +330,3 @@ Obecné pokyny pro vypracování domácích úkolů (rev 25.3.2024)
 
 * Opsané úkoly budou hodnoceny 0 bodů pro všechny zůčastněné
   a to bez výjimky (+bonus v podobě návštěvy u disciplinární komise).
-
-
-Poslední modifikace: 25. March 2024
-Pokud naleznete na této stránce chybu, oznamte to dopisem na adresu peringer AT fit.vutbr.cz
